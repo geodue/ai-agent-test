@@ -1756,3 +1756,40 @@ li + li {
 .single-button-row .secondary-button {
   max-width: 100%;
 }
+
+.quiz-nav-row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-start;
+  margin: 14px 0 0;
+}
+
+.back-button {
+  min-height: 38px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(124, 178, 255, 0.18);
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--text-sub);
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.back-button::before {
+  content: "←";
+  margin-right: 6px;
+  color: var(--blue);
+}
+
+.back-button:hover:not(:disabled) {
+  border-color: rgba(127, 240, 216, 0.34);
+  background: rgba(127, 240, 216, 0.08);
+  color: var(--text-main);
+}
+
+.back-button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}

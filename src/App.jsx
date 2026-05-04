@@ -65,6 +65,7 @@ function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [scores, setScores] = useState(initialScores);
   const [saveStatus, setSaveStatus] = useState("idle");
+  const [answerHistory, setAnswerHistory] = useState([]);
 
   const currentQuestion = questions[currentIndex];
   const progress = Math.round(((currentIndex + 1) / questions.length) * 100);
@@ -163,31 +164,52 @@ function App() {
     setCurrentIndex(0);
     setScores(initialScores);
     setSaveStatus("idle");
+    setAnswerHistory([]);
   };
 
   const handleAnswer = async (answer) => {
-    const nextScores = { ...scores };
+  const nextScores = { ...scores };
 
-    if (answer.scoreType !== "neutral") {
-      nextScores[answer.scoreType] += answer.score;
-    }
+  if (answer.scoreType !== "neutral") {
+    nextScores[answer.scoreType] += answer.score;
+  }
 
-    if (currentIndex + 1 >= questions.length) {
-      setScores(nextScores);
-      setStep("result");
-      await saveResultToSheet(nextScores);
-      return;
-    }
+  const nextHistory = [...answerHistory, answer];
 
+  if (currentIndex + 1 >= questions.length) {
     setScores(nextScores);
-    setCurrentIndex(currentIndex + 1);
-  };
+    setAnswerHistory(nextHistory);
+    setStep("result");
+    await saveResultToSheet(nextScores);
+    return;
+  }
+
+  setScores(nextScores);
+  setAnswerHistory(nextHistory);
+  setCurrentIndex(currentIndex + 1);
+};
+
+const handlePrevQuestion = () => {
+  if (currentIndex === 0 || answerHistory.length === 0) return;
+
+  const lastAnswer = answerHistory[answerHistory.length - 1];
+  const nextScores = { ...scores };
+
+  if (lastAnswer.scoreType !== "neutral") {
+    nextScores[lastAnswer.scoreType] -= lastAnswer.score;
+  }
+
+  setScores(nextScores);
+  setAnswerHistory(answerHistory.slice(0, -1));
+  setCurrentIndex(currentIndex - 1);
+};
 
   const handleRestart = () => {
     setStep("intro");
     setCurrentIndex(0);
     setScores(initialScores);
     setSaveStatus("idle");
+    setAnswerHistory([]);
   };
 
  if (step === "intro") {
@@ -256,6 +278,15 @@ function App() {
             />
           </div>
 
+          <div className="quiz-nav-row">
+            <button
+              className="back-button"
+              onClick={handlePrevQuestion}
+              disabled={currentIndex === 0}
+            >
+              이전 질문
+            </button>
+          </div>
           <h2>{currentQuestion.question}</h2>
 
           <div className="answer-list">
