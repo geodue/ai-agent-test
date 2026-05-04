@@ -297,19 +297,19 @@ function App() {
 
         <p className="result-owner">{userName.trim()}님의 AI Agent 유형은</p>
 
-        <div className="result-hero">
-          <div>
-            <div className="result-code">{finalCode}</div>
-            <h1>{result.name}</h1>
-            <p className="mbti">MBTI로 치면 {result.mbti}에 가까운 유형</p>
-          </div>
-
-          <div className="profile-image-wrap">
+        <div className="result-hero result-hero-large">
+          <div className="profile-image-wrap profile-image-wrap-large">
             <img
               className="profile-image"
               src={`/images/agents/${finalCode}.png`}
               alt={result.name}
             />
+          </div>
+
+          <div className="result-title-block">
+            <div className="result-code">{finalCode}</div>
+            <h1>{result.name}</h1>
+            <p className="mbti">MBTI로 치면 {result.mbti}에 가까운 유형</p>
           </div>
         </div>
 
