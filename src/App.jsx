@@ -190,21 +190,6 @@ function App() {
     setSaveStatus("idle");
   };
 
-  const handleShare = async () => {
-    const shareText = `${userName.trim()}님의 AI Agent 유형은 ${result.name} (${result.mbti})!\n${result.subtitle}`;
-
-    if (navigator.share) {
-      await navigator.share({
-        title: "나를 AI Agent로 만든다면?",
-        text: shareText,
-        url: window.location.href,
-      });
-    } else {
-      await navigator.clipboard.writeText(shareText);
-      alert("결과가 클립보드에 복사되었습니다.");
-    }
-  };
-
  if (step === "intro") {
   return (
     <main className="intro-full-page">
@@ -483,13 +468,9 @@ function App() {
             "Google Sheet URL이 아직 연결되지 않았습니다."}
         </p>
 
-        <div className="button-row">
+        <div className="button-row single-button-row">
           <button className="secondary-button" onClick={handleRestart}>
             다시하기
-          </button>
-
-          <button className="primary-button" onClick={handleShare}>
-            결과 공유하기
           </button>
         </div>
       </section>
