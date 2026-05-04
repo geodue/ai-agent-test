@@ -217,11 +217,11 @@ function App() {
         <div className="intro-copy-panel">
           <p className="eyebrow">DST AI Agent Type Test</p>
 
-          <h1>내가 만일 AI Agent라면?</h1>
+          <h1>내가 만일<br />AI Agent라면?</h1>
 
           <p className="intro-text">
             일하는 방식, 회의 습관, AI 활용 패턴을 바탕으로
-            나와 닮은 AI Agent 유형을 찾아보세요.
+            <br />나와 닮은 AI Agent 유형을 찾아보세요.
           </p>
 
           <div className="intro-start-panel">
